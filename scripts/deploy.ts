@@ -6,6 +6,8 @@
 import { ethers } from "hardhat";
 import { config } from "dotenv";
 
+import { writeFileSync } from "fs";
+
 config();
 
 (async function main() {
@@ -15,17 +17,19 @@ config();
     // Deploying Retro contract
     const RetroContractFactory = await ethers.getContractFactory("Retro");
     const retro = await RetroContractFactory.deploy();
-
     await retro.deployed();
-    console.log("Greeter deployed to:", retro.address);
+    console.log("Retro deployed to:", retro.address);
 
-    // Minting a token
-    const { WALLET_ADDRESS } = process.env;
-    if (!WALLET_ADDRESS) {
-      throw new Error("WALLET_ADDRESS is not set");
-    }
-    console.log("Minting tokens to the owner address");
-    retro.mint(WALLET_ADDRESS, 100);
+    // Deploying Token contract
+    const RMContractFactory = await ethers.getContractFactory("RetroMachine");
+    const retroMachine = await RMContractFactory.deploy();
+    await retroMachine.deployed();
+    console.log("RetroMachine deployed to:", retroMachine.address);
+    const config = {
+      retroMachine: retroMachine.address,
+      retro: retro.address,
+    };
+    writeFileSync("./output/config.json", JSON.stringify(config));
   } catch (error) {
     console.error(error);
     process.exitCode = 1;

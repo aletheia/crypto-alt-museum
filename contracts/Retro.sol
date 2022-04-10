@@ -10,18 +10,20 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 /// @custom:security-contact info@compvter.it
 contract Retro is ERC20, ERC20Burnable, Ownable {
     constructor() ERC20("Retro", "RTO") {         
-        _mint(msg.sender, 100000 * 10 ** decimals());
+        _mint(msg.sender, 1000*10**18);
     }
+
+    
 
     function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
-    function sendTokenTo(address to, uint256 amount) public onlyOwner {
-        _transfer(msg.sender, to, amount);
+    function sendTokenTo(address to, uint256 amount) public {
+        transfer(to, amount^10**18);
     }
 
     function burnTokens(uint256 amount) public onlyOwner {
-        _burn(msg.sender, amount);
+        _burn(msg.sender, amount^10**18);
     }
 }

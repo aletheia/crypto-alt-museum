@@ -12,6 +12,12 @@ dotenv.config();
 const { WALLET_PRIVATE_KEY, ETHERSCAN_API_KEY, ALCHEMY_URL, REPORT_GAS } =
   process.env;
 
+if (!WALLET_PRIVATE_KEY || !ALCHEMY_URL) {
+  throw new Error(
+    "Please set the WALLET_PRIVATE_KEY and ALCHEMY_URL environment variable to your wallet private key"
+  );
+}
+
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
 
@@ -26,12 +32,15 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 const config: HardhatUserConfig = {
   solidity: "0.8.4",
   networks: {
+    bsctestnet: {
+      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      chainId: 97,
+      gasPrice: 20000000000,
+      accounts: [WALLET_PRIVATE_KEY],
+    },
     ropsten: {
       url: ALCHEMY_URL || "",
-      accounts:
-        process.env.PRIVATE_KEY !== undefined
-          ? [`0x${WALLET_PRIVATE_KEY}`]
-          : [],
+      accounts: [WALLET_PRIVATE_KEY],
     },
   },
   gasReporter: {

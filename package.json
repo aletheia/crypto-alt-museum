@@ -17,7 +17,8 @@
     "compile": "hardhat compile",
     "solhint": "solhint '**/*.sol' --fix",
     "deploy": "hardhat run scripts/deploy.ts",
-    "deploy:ropsten": "hardhat run scripts/deploy.ts --network ropsten"
+    "deploy:ropsten": "hardhat run scripts/deploy.ts --network ropsten",
+    "deploy:bsctest": "hardhat run scripts/deploy.ts --network bsctestnet"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
@@ -54,6 +55,9 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^4.5.0"
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@openzeppelin/contracts": "^4.5.0",
+    "framer-motion": "^6.2.9"
   }
 }

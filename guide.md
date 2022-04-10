@@ -89,3 +89,6 @@ Instantiate the contract factory and deploy the contract, adding the following c
 
 
 
+## Create a new ERC721 for the museum, the machine token
+
+Create 
