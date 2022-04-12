@@ -18,6 +18,7 @@
     "solhint": "solhint '**/*.sol' --fix",
     "deploy": "hardhat run scripts/deploy.ts",
     "deploy:ropsten": "hardhat run scripts/deploy.ts --network ropsten",
+    "deploy:rinkeby": "hardhat run scripts/deploy.ts --network rinkeby",
     "deploy:bsctest": "hardhat run scripts/deploy.ts --network bsctestnet"
   },
   "devDependencies": {

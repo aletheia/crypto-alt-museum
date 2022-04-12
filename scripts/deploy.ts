@@ -18,18 +18,24 @@ config();
     const RetroContractFactory = await ethers.getContractFactory("Retro");
     const retro = await RetroContractFactory.deploy();
     await retro.deployed();
-    console.log("Retro deployed to:", retro.address);
 
     // Deploying Token contract
     const RMContractFactory = await ethers.getContractFactory("RetroMachine");
+    const provider = RMContractFactory.signer.provider;
+    if (!provider) throw new Error("Provider not found");
+    const network = await provider.getNetwork();
+    console.log(`Deploying on ${network.name}`);
     const retroMachine = await RMContractFactory.deploy();
     await retroMachine.deployed();
-    console.log("RetroMachine deployed to:", retroMachine.address);
     const config = {
       retroMachine: retroMachine.address,
       retro: retro.address,
+      chainId: network.chainId,
+      chainName: network.name,
     };
     writeFileSync("./output/config.json", JSON.stringify(config));
+    console.log("Retro deployed to:", retro.address);
+    console.log("RetroMachine deployed to:", retroMachine.address);
   } catch (error) {
     console.error(error);
     process.exitCode = 1;

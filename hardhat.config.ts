@@ -9,10 +9,15 @@ import "solidity-coverage";
 
 dotenv.config();
 
-const { WALLET_PRIVATE_KEY, ETHERSCAN_API_KEY, ALCHEMY_URL, REPORT_GAS } =
-  process.env;
+const {
+  WALLET_PRIVATE_KEY,
+  ETHERSCAN_API_KEY,
+  ROPSTEN_ALCHEMY_URL,
+  RINKEBY_ALCHEMY_URL,
+  REPORT_GAS,
+} = process.env;
 
-if (!WALLET_PRIVATE_KEY || !ALCHEMY_URL) {
+if (!WALLET_PRIVATE_KEY || !RINKEBY_ALCHEMY_URL || !ROPSTEN_ALCHEMY_URL) {
   throw new Error(
     "Please set the WALLET_PRIVATE_KEY and ALCHEMY_URL environment variable to your wallet private key"
   );
@@ -39,7 +44,11 @@ const config: HardhatUserConfig = {
       accounts: [WALLET_PRIVATE_KEY],
     },
     ropsten: {
-      url: ALCHEMY_URL || "",
+      url: ROPSTEN_ALCHEMY_URL,
+      accounts: [WALLET_PRIVATE_KEY],
+    },
+    rinkeby: {
+      url: RINKEBY_ALCHEMY_URL,
       accounts: [WALLET_PRIVATE_KEY],
     },
   },
